@@ -137,8 +137,9 @@ void Player::movePlayer()
             mainGameMechsRef->incrementScore();
         }
         else{ // if eat special food
-            for(int j = 0; j<5; j++)
-            mainGameMechsRef->incrementScore();
+            playerPosList->insertHead(newPos);
+            playerPosList->removeTail();
+            mainGameMechsRef->incrementScore5();
         }
         // Generate new food
         mainGameMechsRef->generateFood(playerPosList);
@@ -153,9 +154,6 @@ void Player::movePlayer()
     
     }
 
-    // playerPosList->insertHead(newPos);
-    // playerPosList->removeTail();
-    // PPA3 Finite State Machine logic
 }
 
 bool Player::checkselfcollision()

@@ -40,7 +40,7 @@ class GameMechs
         
         int getScore() const;
         void incrementScore();
-        
+        void incrementScore5();
 
 
         void generateFood(objPosArrayList* snakebody);
