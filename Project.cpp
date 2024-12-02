@@ -152,7 +152,7 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
-    MacUILib_printf("\nControls: w  A  S  D");
+    MacUILib_printf("\nControls: W  A  S  D");
     MacUILib_printf("\nHit Space Button to stop the game");
     MacUILib_printf("\nScore: %d", game->getScore());
     MacUILib_printf("\n\n");

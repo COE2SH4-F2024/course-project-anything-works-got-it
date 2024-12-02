@@ -1,16 +1,16 @@
-#include "food.h"
+#include "foodBin.h"
 
 
-food::food(){
+foodBin::foodBin(){
     foodBucket = new objPosArrayList();
 }
 
-food::~food(){
+foodBin::~foodBin(){
     delete foodBucket;
 }
 
 
-void food:: generateFood(int boardSizeX, int boardSizeY, objPosArrayList* snakebody){
+void foodBin:: generateFood(int boardSizeX, int boardSizeY, objPosArrayList* snakebody){
 
     int foodX, foodY;
     int copyX = 0, copyY = 0;
@@ -55,7 +55,7 @@ void food:: generateFood(int boardSizeX, int boardSizeY, objPosArrayList* snakeb
 
 }
 
-objPos food:: getFoodPos(int i) const{
+objPos foodBin:: getFoodPos(int i) const{
 
     return foodBucket->getElement(i);
 } 

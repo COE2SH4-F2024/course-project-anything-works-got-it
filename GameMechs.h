@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include "objPosArrayList.h"
 #include "objPos.h"
-// #include "food.h"
+#include "foodBin.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ class GameMechs
         int boardSizeY;
        
         objPos* food;
-        // food foodBucket;
+        foodBin foodBucket;
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);

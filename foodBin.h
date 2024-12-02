@@ -4,13 +4,13 @@
 #include "objPosArrayList.h"
 #include <cstdlib>
 
-class food{
+class foodBin{
 
     private:
         objPosArrayList* foodBucket;
     public:
-        food();
-        ~food();
+        foodBin();
+        ~foodBin();
         void generateFood(int,int, objPosArrayList*);
         objPos getFoodPos(int) const;
 
