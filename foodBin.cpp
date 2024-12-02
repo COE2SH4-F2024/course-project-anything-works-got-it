@@ -13,12 +13,10 @@ foodBin::~foodBin(){
 void foodBin:: generateFood(int boardSizeX, int boardSizeY, objPosArrayList* snakebody){
 
     int foodX, foodY;
-    int copyX = 0, copyY = 0;
+    int copyX = -1, copyY = -1;
     bool invalidPosition;
-    objPos emptyFood;
-
+    int mysyticNumber = rand()%3 + 3; // 0 to 2. + 3 shifts to right by 3 -> 3 to 5
     for (int i = 0; i < 5; i++){
-    foodBucket->insertHead(emptyFood);
     do {
         invalidPosition = false;
 
@@ -47,8 +45,14 @@ void foodBin:: generateFood(int boardSizeX, int boardSizeY, objPosArrayList* sna
         }
     } while (invalidPosition);
 
-     foodBucket->getElement(i).setObjPos(foodX, foodY, '*');
-
+    if (i < mysyticNumber){
+     objPos newFood (foodX,foodY,'*');
+     foodBucket->insertHead(newFood);
+    }
+    else{
+     objPos newFood (foodX,foodY,'+');
+     foodBucket->insertHead(newFood);
+    }
      copyX = foodX;
      copyY = foodY; 
     }

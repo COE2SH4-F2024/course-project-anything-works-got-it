@@ -82,36 +82,7 @@ void Player::movePlayer()
     int newX = currentHead.pos->x;
     int newY = currentHead.pos->y;
     int flag = 0;
-    //Switch based on mydirection
-    // switch (myDir) {
-    //     case UP:
-    //         playerPos.pos->y--;
-    //         if (playerPos.pos->y < 1) {
-    //             playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;  // Wraparound logic for top
-    //         }
-    //         break;
-    //     case DOWN:
-    //         playerPos.pos->y++;
-    //         if (playerPos.pos->y > mainGameMechsRef->getBoardSizeY() - 2) {
-    //             playerPos.pos->y = 1;  // Wraparound logic for bottom
-    //         }
-    //         break;
-    //     case LEFT:
-    //         playerPos.pos->x--;
-    //         if (playerPos.pos->x < 1) {
-    //             playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;  // Wraparound logic for left
-    //         }
-    //         break;
-    //     case RIGHT:
-    //         playerPos.pos->x++;
-    //         if (playerPos.pos->x > mainGameMechsRef->getBoardSizeX() - 2) {
-    //             playerPos.pos->x = 1;  // Wraparound logic for right
-    //         }
-    //         break;
-    //     default:
-    //         // Do nothing; the player remains stationary
-    //         break;
-    // }
+
 
     switch (myDir) {
         case UP:
@@ -143,9 +114,7 @@ void Player::movePlayer()
             break;
     }
 
-    // Create new position and update the list
-    // objPos newPos(newX, newY, '@');
-    // Create new head position
+
 
     if (checkselfcollision()) {
         // Collision detected: set lose and exit flags
@@ -157,15 +126,22 @@ void Player::movePlayer()
         objPos newPos(newX, newY, '@');
 
     // Check for collision with food
-    objPos* foodPos = mainGameMechsRef->getFoodpos();
+    //objPos* foodPos = mainGameMechsRef->getFoodpos();
     for (int i = 0; i<5; i++){
-    if (newX == foodPos[i].pos->x && newY == foodPos[i].pos->y) {
+    if (newX == mainGameMechsRef->getFoodpos(i).pos->x && newY == mainGameMechsRef->getFoodpos(i).pos->y) {
         // Eat the food: Insert new head, don't remove tail
-        playerPosList->insertHead(newPos);
-
+        
+        // if eat normal food
+        if (mainGameMechsRef->getFoodpos(i).getSymbol() == '*'){
+            playerPosList->insertHead(newPos);
+            mainGameMechsRef->incrementScore();
+        }
+        else{ // if eat special food
+            for(int j = 0; j<5; j++)
+            mainGameMechsRef->incrementScore();
+        }
         // Generate new food
         mainGameMechsRef->generateFood(playerPosList);
-        mainGameMechsRef->incrementScore();
         flag = 1;
     } 
     }

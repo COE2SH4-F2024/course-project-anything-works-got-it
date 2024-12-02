@@ -20,7 +20,7 @@ class GameMechs
         int boardSizeY;
        
         objPos* food;
-        foodBin foodBucket;
+        foodBin* foodBucket;
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
@@ -41,11 +41,13 @@ class GameMechs
         int getScore() const;
         void incrementScore();
         
-        // More methods should be added here
+
 
         void generateFood(objPosArrayList* snakebody);
-        // objPos getFoodpos(int) const ;
-        objPos* getFoodpos() const ;
+       
+
+
+        objPos getFoodpos(int) const ;
 };
 
 #endif

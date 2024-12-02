@@ -73,45 +73,7 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    // objPos playerposition = player1->getPlayerPos();
-    // objPos player1copy = playerposition.getObjPos();
-    // objPos foodposition = game->getFoodpos();
-    // objPos foodcopy = foodposition.getObjPos();
-
-    // objPosArrayList* playerlist = player1->getplayerPosList();
-
-    // MacUILib_clearScreen();  
-
-    // for(int i = 0 ; i < game->getBoardSizeY();i++){
-
-    //     for(int j = 0 ; j < game->getBoardSizeX(); j++){
-            
-    //         if ( i == 0 || i == game->getBoardSizeY()-1 || j ==0 || j == game->getBoardSizeX()-1 )
-
-    //         {MacUILib_printf("#");}
-
-    //         else if(i == player1copy.pos->y && j == player1copy.pos->x){
-
-    //             MacUILib_printf("%c",player1copy.symbol);
-    //         }
-
-    //         else if( i == foodcopy.pos->y && j == foodcopy.pos->x ){
-
-    //             MacUILib_printf("%c",foodcopy.symbol);
-    //         }
-
-    //         else
-    //         {
-
-    //             MacUILib_printf(" ");
-
-    //         }
-    //     }
-    //     MacUILib_printf("\n");
-    // }
-
-    objPos* foodcopy = game->getFoodpos();
-
+   
     MacUILib_clearScreen();  
 
     objPosArrayList* playerList = player1->getplayerPosList(); 
@@ -136,8 +98,8 @@ void DrawScreen(void)
                 // Check if the current position is food
                 if(!printed) {
                     for (int k = 0; k < 5; k++ ){
-                    if(i == foodcopy[k].pos->y && j == foodcopy[k].pos->x){
-                        MacUILib_printf("%c", foodcopy[k].symbol);
+                    if(i == game->getFoodpos(k).pos->y && j == game->getFoodpos(k).pos->x){
+                        MacUILib_printf("%c", game->getFoodpos(k).symbol);
                         printed = true;
                         }
                     }
@@ -158,7 +120,7 @@ void DrawScreen(void)
     MacUILib_printf("\n\n");
     MacUILib_printf("**Report**");
     for (int z = 0; z < 5; z++){
-    MacUILib_printf("\nFruit %d Position: [%d, %d]",z+1,foodcopy[z].pos->x,foodcopy[z].pos->y);
+    MacUILib_printf("\nFruit %d Position: [%d, %d]",z+1,game->getFoodpos(z).pos->x,game->getFoodpos(z).pos->y);
     }
     if (game->getExitFlagStatus() && game->getLoseFlagStatus() != true){
         MacUILib_printf("\n\nYour Final Score is %d", game->getScore());
