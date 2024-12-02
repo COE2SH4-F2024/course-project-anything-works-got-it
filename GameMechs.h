@@ -2,10 +2,9 @@
 #define GAMEMECHS_H
 
 #include <cstdlib>
-#include <time.h>
-
-#include "objPos.h"
 #include "objPosArrayList.h"
+#include "objPos.h"
+// #include "food.h"
 
 using namespace std;
 
@@ -19,9 +18,9 @@ class GameMechs
 
         int boardSizeX;
         int boardSizeY;
-
-        objPos food;
-
+       
+        objPos* food;
+        // food foodBucket;
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
@@ -35,7 +34,7 @@ class GameMechs
         char getInput();
         void setInput(char this_input);
         void clearInput();
-
+        // check
         int getBoardSizeX() const;
         int getBoardSizeY() const;
         
@@ -45,7 +44,8 @@ class GameMechs
         // More methods should be added here
 
         void generateFood(objPosArrayList* snakebody);
-        objPos getFoodpos() const ;
+        // objPos getFoodpos(int) const ;
+        objPos* getFoodpos() const ;
 };
 
 #endif

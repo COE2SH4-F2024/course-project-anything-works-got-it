@@ -7,18 +7,20 @@ GameMechs::GameMechs()
     exitFlag = false;
     loseFlag = false;
     score = 0;
-
+    food = new objPos[5];
     boardSizeX = 30 ;
     boardSizeY = 15 ;
-
+    
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
 {
+   
     input = 0 ;
     exitFlag = false;
     loseFlag = false;
     score = 0;
+    food = new objPos[5];
 
     boardSizeX = boardX ;
     boardSizeY = boardY ;
@@ -28,7 +30,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    //not right now 
+    //delete[] food;
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -48,7 +50,7 @@ bool GameMechs::getLoseFlagStatus() const
 
 char GameMechs::getInput() 
 {
-    return input;
+    return input;  
 }
 
 int GameMechs::getScore() const
@@ -122,12 +124,15 @@ void GameMechs::generateFood(objPosArrayList* snakebody)
     // food.setObjPos(foodX, foodY, '*');
 
     int foodX, foodY;
+    int copyX = 0, copyY = 0;
     bool invalidPosition;
-
+    
+    for (int i = 0; i < 5; i++){
     do {
         invalidPosition = false;
 
         // Generate random coordinates
+        
         foodX = rand() % boardSizeX;
         foodY = rand() % boardSizeY;
 
@@ -135,7 +140,11 @@ void GameMechs::generateFood(objPosArrayList* snakebody)
         if (foodX == 0 || foodX == boardSizeX - 1 ||
             foodY == 0 || foodY == boardSizeY - 1) {
             invalidPosition = true;
-        } else {
+        } 
+        else if (foodX == copyX && foodY == copyY){
+            invalidPosition = true;
+        }
+        else {
             // Check for overlap with snake body
             for (int i = 0; i < snakebody->getSize(); i++) {
                 objPos segment = snakebody->getElement(i);
@@ -147,12 +156,22 @@ void GameMechs::generateFood(objPosArrayList* snakebody)
         }
     } while (invalidPosition);
 
-    // Set new food position
-    food.setObjPos(foodX, foodY, '*');
+     food[i].setObjPos(foodX, foodY, '*');
+     copyX = foodX;
+     copyY = foodY; 
+    }
+
+   // foodBucket.generateFood(boardSizeX,boardSizeY,snakebody);
+
+   
 
 } 
 
-objPos GameMechs::getFoodpos() const 
-{
+// objPos GameMechs::getFoodpos(int i) const 
+// {
+//     foodBucket.getFoodPos(i);
+// }
+objPos* GameMechs::getFoodpos() const 
+{ 
     return food;
 }

@@ -3,12 +3,10 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
-
+#include <time.h>
 using namespace std;
 
 #define DELAY_CONST 100000
-
-bool exitFlag;
 
 GameMechs *game;
 Player* player1;
@@ -48,13 +46,10 @@ void Initialize(void)
 
     srand(time(NULL));
 
-    game = new GameMechs();
+    game = new GameMechs(50,20);
     player1 = new Player(game);
-    //game->generateFood(player1->getPlayerPos());
     game->generateFood(player1->getplayerPosList());
-    
 
-    exitFlag = false;
 }
 
 void GetInput(void)
@@ -68,11 +63,10 @@ void GetInput(void)
 
 void RunLogic(void)
 {
-    //srand(time(NULL));
+
 
     player1->updatePlayerDir();
     player1->movePlayer();
-    
 
     
 }
@@ -116,16 +110,15 @@ void DrawScreen(void)
     //     MacUILib_printf("\n");
     // }
 
-    objPos foodcopy = game->getFoodpos();
+    objPos* foodcopy = game->getFoodpos();
 
     MacUILib_clearScreen();  
 
-    objPosArrayList* playerList = player1->getplayerPosList();
-
+    objPosArrayList* playerList = player1->getplayerPosList(); 
     for(int i = 0; i < game->getBoardSizeY(); i++) {  // Y-axis (rows)
         for(int j = 0; j < game->getBoardSizeX(); j++) {  // X-axis (columns)
             if (i == 0 || i == game->getBoardSizeY() - 1 || j == 0 || j == game->getBoardSizeX() - 1) {
-                MacUILib_printf("#");
+                MacUILib_printf("#"); // draw the game board
             }
             else {
                 bool printed = false;
@@ -142,10 +135,13 @@ void DrawScreen(void)
 
                 // Check if the current position is food
                 if(!printed) {
-                    if(i == foodcopy.pos->y && j == foodcopy.pos->x){
-                        MacUILib_printf("%c", foodcopy.symbol);
+                    for (int k = 0; k < 5; k++ ){
+                    if(i == foodcopy[k].pos->y && j == foodcopy[k].pos->x){
+                        MacUILib_printf("%c", foodcopy[k].symbol);
                         printed = true;
+                        }
                     }
+                    
                 }
 
                 // If nothing is printed, print a space
@@ -156,7 +152,30 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
-    MacUILib_printf("WASD are the controls");
+    MacUILib_printf("\nControls: w  A  S  D");
+    MacUILib_printf("\nHit Space Button to stop the game");
+    MacUILib_printf("\nScore: %d", game->getScore());
+    MacUILib_printf("\n\n");
+    MacUILib_printf("**Report**");
+    for (int z = 0; z < 5; z++){
+    MacUILib_printf("\nFruit %d Position: [%d, %d]",z+1,foodcopy[z].pos->x,foodcopy[z].pos->y);
+    }
+    if (game->getExitFlagStatus() && game->getLoseFlagStatus() != true){
+        MacUILib_printf("\n\nYour Final Score is %d", game->getScore());
+        MacUILib_printf("\n********************");
+        MacUILib_printf("\nThank you for playing!");
+        MacUILib_printf("\n********************");
+    }
+
+    else if(game->getLoseFlagStatus()){
+        MacUILib_printf("\n\nBetter Luck Next Time");
+        MacUILib_printf("\nYour Final Score is %d", game->getScore());
+        MacUILib_printf("\n********************");
+        MacUILib_printf("\nThank you for playing!");
+        MacUILib_printf("\n********************");
+    }
+
+
       
 }
 
@@ -168,7 +187,7 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    //MacUILib_clearScreen();    
 
     MacUILib_uninit();
 }

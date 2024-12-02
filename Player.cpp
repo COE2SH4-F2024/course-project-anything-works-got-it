@@ -81,7 +81,7 @@ void Player::movePlayer()
     objPos currentHead = playerPosList->getHeadElement();
     int newX = currentHead.pos->x;
     int newY = currentHead.pos->y;
-
+    int flag = 0;
     //Switch based on mydirection
     // switch (myDir) {
     //     case UP:
@@ -157,19 +157,24 @@ void Player::movePlayer()
         objPos newPos(newX, newY, '@');
 
     // Check for collision with food
-    objPos foodPos = mainGameMechsRef->getFoodpos();
-    if (newX == foodPos.pos->x && newY == foodPos.pos->y) {
+    objPos* foodPos = mainGameMechsRef->getFoodpos();
+    for (int i = 0; i<5; i++){
+    if (newX == foodPos[i].pos->x && newY == foodPos[i].pos->y) {
         // Eat the food: Insert new head, don't remove tail
         playerPosList->insertHead(newPos);
 
         // Generate new food
         mainGameMechsRef->generateFood(playerPosList);
-    } else {
+        mainGameMechsRef->incrementScore();
+        flag = 1;
+    } 
+    }
+    if (!flag) {
         // Regular movement: Insert new head, remove tail
         playerPosList->insertHead(newPos);
         playerPosList->removeTail();
     }
-
+    
     }
 
     // playerPosList->insertHead(newPos);
