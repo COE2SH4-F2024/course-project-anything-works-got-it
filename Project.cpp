@@ -55,20 +55,19 @@ void Initialize(void)
 void GetInput(void)
 {
    char input;
+   // get the user input
     if (MacUILib_hasChar()) {
         input = MacUILib_getChar();
-        game->setInput(input);  // Use a method in GameMechs
+        game->setInput(input); 
     }
 }
 
 void RunLogic(void)
 {
-
-
+    // snake moving logic
     player1->updatePlayerDir();
     player1->movePlayer();
 
-    
 }
 
 void DrawScreen(void)
@@ -80,7 +79,7 @@ void DrawScreen(void)
     for(int i = 0; i < game->getBoardSizeY(); i++) {  // Y-axis (rows)
         for(int j = 0; j < game->getBoardSizeX(); j++) {  // X-axis (columns)
             if (i == 0 || i == game->getBoardSizeY() - 1 || j == 0 || j == game->getBoardSizeX() - 1) {
-                MacUILib_printf("#"); // draw the game board
+                MacUILib_printf("#"); // draw the game board edges
             }
             else {
                 bool printed = false;
@@ -107,6 +106,7 @@ void DrawScreen(void)
                 }
 
                 // If nothing is printed, print a space
+                // Free moving area
                 if(!printed) {
                     MacUILib_printf(" ");
                 }

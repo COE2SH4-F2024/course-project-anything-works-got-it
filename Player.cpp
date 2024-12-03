@@ -5,16 +5,9 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-
     playerPosList = new objPosArrayList();
-    objPos initialPos(5, 5, '@');  // Starting position with '@' symbol
+    objPos initialPos(5, 5, '@');  // the starting position with '@' symbol
     playerPosList->insertHead(initialPos);
-    // objPos otherbodypart(4,5,'@');
-    // playerPosList->insertHead(otherbodypart);
-    
-
-
-    // more actions to be included
 }
 
 
@@ -24,10 +17,6 @@ Player::~Player()
     // delete any heap members here
 }
 
-// void Player::getPlayerPos(objPos &returnPos) const
-// {
-//     // return the reference to the playerPos arrray list
-// }
 
 objPos Player::getPlayerPos() const
 {
@@ -70,9 +59,6 @@ void Player::updatePlayerDir()
             case ' ':  // Space to exit
                 mainGameMechsRef->setExitTrue();
                 break;
-            // case 'f':
-            //     mainGameMechsRef->generateFood(playerPos);
-            //     break;
         }       
 }
 
@@ -125,9 +111,8 @@ void Player::movePlayer()
     {
         objPos newPos(newX, newY, '@');
 
-    // Check for collision with food
-    //objPos* foodPos = mainGameMechsRef->getFoodpos();
-    for (int i = 0; i<5; i++){
+    // Check for collision with a total of 5 foods
+    for (int i = 0; i < 5; i++){ 
     if (newX == mainGameMechsRef->getFoodpos(i).pos->x && newY == mainGameMechsRef->getFoodpos(i).pos->y) {
         // Eat the food: Insert new head, don't remove tail
         
@@ -146,6 +131,7 @@ void Player::movePlayer()
         flag = 1;
     } 
     }
+
     if (!flag) {
         // Regular movement: Insert new head, remove tail
         playerPosList->insertHead(newPos);
@@ -174,4 +160,3 @@ bool Player::checkselfcollision()
     return false; // No collision
 }
 
-// More methods to be added

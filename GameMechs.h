@@ -19,12 +19,11 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
        
-        objPos* food;
-        foodBin* foodBucket;
+        foodBin* foodBucket; // foodBin class is considered to be one of the members in GameMechs
     public:
         GameMechs();
         GameMechs(int boardX, int boardY);
-        ~GameMechs(); // is this one needed at all? Why or why not?
+        ~GameMechs(); 
         
         bool getExitFlagStatus() const; 
         void setExitTrue();
@@ -34,12 +33,13 @@ class GameMechs
         char getInput();
         void setInput(char this_input);
         void clearInput();
-        // check
+        
         int getBoardSizeX() const;
         int getBoardSizeY() const;
         
         int getScore() const;
         void incrementScore();
+        // the special function for incrementing score by 5 if the snake hits special food '+'
         void incrementScore5();
 
 

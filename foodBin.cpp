@@ -15,46 +15,42 @@ void foodBin:: generateFood(int boardSizeX, int boardSizeY, objPosArrayList* sna
     int foodX, foodY;
     int copyX = -1, copyY = -1;
     bool invalidPosition;
-    int mysyticNumber = rand()%3 + 3; // 0 to 2. + 3 shifts to right by 3 -> 3 to 5
-    for (int i = 0; i < 5; i++){
+    int mysyticNumber = rand()%3 + 3; // randomly generate a number for the maximum number of ordinary food
+    int referenceMap[boardSizeY][boardSizeX]={0};
+
+    for (int i = 0; i < 5; i++){ // A total of 5 food will be generated and displayed on the board; number is preset
+
     do {
         invalidPosition = false;
 
         // Generate random coordinates
         
-        foodX = rand() % boardSizeX;
-        foodY = rand() % boardSizeY;
+        foodX = rand() % (boardSizeX-2)+1;
+        foodY = rand() % (boardSizeY-2)+1;
 
         // Check if position is on border
-        if (foodX == 0 || foodX == boardSizeX - 1 ||
-            foodY == 0 || foodY == boardSizeY - 1) {
-            invalidPosition = true;
-        } 
-        else if (foodX == copyX && foodY == copyY){
-            invalidPosition = true;
-        }
-        else {
             // Check for overlap with snake body
-            for (int i = 0; i < snakebody->getSize(); i++) {
+        for (int i = 0; i < snakebody->getSize(); i++) {
                 objPos segment = snakebody->getElement(i);
                 if (foodX == segment.pos->x && foodY == segment.pos->y) {
                     invalidPosition = true;
                     break;
                 }
             }
-        }
-    } while (invalidPosition);
+        if (referenceMap[foodY][foodX] == 1) invalidPosition = true;
 
-    if (i < mysyticNumber){
+    } while (invalidPosition);
+    referenceMap[foodY][foodX] = 1; 
+    if (i < mysyticNumber){ // generate normal food
      objPos newFood (foodX,foodY,'*');
      foodBucket->insertHead(newFood);
     }
-    else{
+    else{ // generate special food
      objPos newFood (foodX,foodY,'+');
      foodBucket->insertHead(newFood);
     }
-     copyX = foodX;
-     copyY = foodY; 
+
+
     }
 
 }

@@ -7,7 +7,6 @@ GameMechs::GameMechs()
     exitFlag = false;
     loseFlag = false;
     score = 0;
-    food = new objPos[5];
     boardSizeX = 30 ;
     boardSizeY = 15 ;
     foodBucket = new foodBin();
@@ -20,7 +19,6 @@ GameMechs::GameMechs(int boardX, int boardY)
     exitFlag = false;
     loseFlag = false;
     score = 0;
-    food = new objPos[5];
     foodBucket = new foodBin();
     boardSizeX = boardX ;
     boardSizeY = boardY ;
@@ -30,7 +28,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    //delete[] food;
+    delete foodBucket;
 }
 
 bool GameMechs::getExitFlagStatus() const
@@ -104,14 +102,11 @@ void GameMechs::clearInput()
 
 }
 
-// More methods should be added here
 
 void GameMechs::generateFood(objPosArrayList* snakebody)
 {
    
-
-   foodBucket->generateFood(boardSizeX,boardSizeY,snakebody);
-
+   foodBucket->generateFood(boardSizeX,boardSizeY,snakebody); //  foodBucket of foodBin class calls the function to generate food inside GameMechs generateFood() function
 
 } 
 
