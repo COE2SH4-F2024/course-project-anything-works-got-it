@@ -150,6 +150,8 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     //MacUILib_clearScreen();    
-
+    delete player1;
+    delete game;
+    
     MacUILib_uninit();
 }
